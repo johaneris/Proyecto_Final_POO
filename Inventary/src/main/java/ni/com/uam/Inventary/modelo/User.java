@@ -17,7 +17,6 @@ public class User {
     @Required
     private String password;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @DescriptionsList
     @Required
     private Rol rol;
