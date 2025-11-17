@@ -11,7 +11,7 @@ import org.openxava.util.*;
 public class Inventary {
 
 	public static void main(String[] args) throws Exception {
-		DBServer.start("Inventary-db"); // Para usar tu propia base de datos comenta esta línea y configura src/main/webapp/META-INF/context.xml
+		//DBServer.start("Inventary-db"); // Para usar tu propia base de datos comenta esta línea y configura src/main/webapp/META-INF/context.xml
 		AppServer.run("Inventary"); // Usa AppServer.run("") para funcionar en el contexto raíz
 	}
 
