@@ -23,10 +23,15 @@
         <class>com.openxava.naviox.model.SessionRecord</class>
         <class>com.openxava.naviox.model.User</class>
 
+        <class>com.abrasa.Inventario.modelo.Producto</class>
+        <class>com.abrasa.Inventario.modelo.Factura</class>
+        <class>com.abrasa.Inventario.modelo.DetalleFactura</class>
+        <class>com.abrasa.Inventario.modelo.Cliente</class>
+
+
         <properties>
-            <!-- Dialecto de PostgreSQL -->
+
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-            <!-- Que cree/actualice el esquema automáticamente en la BD (modo desarrollo) -->
             <property name="hibernate.hbm2ddl.auto" value="update"/>
         </properties>
     </persistence-unit>
