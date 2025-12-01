@@ -14,7 +14,7 @@ import org.openxava.annotations.*;
 @View(name = "Simple",
         members =
                 "DatosGenerales[" +
-                        "   codigo; nombre; tipo; proveedor; activo; " +   // ? proveedor visible aquí
+                        "   codigo; nombre; tipo; categoria; proveedor; activo; " +
                         "   descripcion;" +
                         "] " +
                         "Inventario[" +
@@ -26,7 +26,11 @@ import org.openxava.annotations.*;
 )
 @Tab(name = "Productos",
         baseCondition = "activo = true",
-        properties = "codigo, nombre, tipo, proveedor.nombreComercial, unidadMedida, stockActual, stockMinimo, precioVenta"
+        properties =
+                "codigo, nombre, tipo, " +
+                        "categoria.nombre, " +
+                        "proveedor.nombreComercial, " +
+                        "unidadMedida, stockActual, stockMinimo, precioVenta"
 )
 public class Producto {
 
@@ -35,42 +39,47 @@ public class Producto {
     @Column(length = 15)
     @Required
     @LabelFormat(LabelFormatType.SMALL)
-    private String codigo;           // Ej: "HERB-001", "FERT-15KG"
+    private String codigo;
 
     @Column(length = 80)
     @Required
-    private String nombre;           // Ej: "Glifosato 480 SL", "Urea 46%"
+    private String nombre;
 
     @Column(length = 30)
     @Required
-    private String tipo;             // Ej: "Agroquímico", "Fertilizante", "Veterinario"
+    private String tipo;
 
     @Column(length = 200)
     @Stereotype("MEMO")
-    private String descripcion;      // Detalle del producto, dosis, observaciones, etc.
+    private String descripcion;
 
     @Required
-    private boolean activo = true;   // Para desactivar productos sin borrarlos
+    private boolean activo = true;
 
-    // 2) Proveedor del producto
-    @ManyToOne
+    // -------- Categoría --------
+    @ManyToOne(optional = false)
+    @DescriptionsList(descriptionProperties = "nombre")   // Campo de Categoria
+    @Required
+    private Categoria categoria;
+
+    // -------- Proveedor --------
+    @ManyToOne(optional = false)
     @DescriptionsList(descriptionProperties = "nombreComercial, nombreLegal")
     @NoCreate
     @NoModify
-    private Proveedor proveedor;     // Quién nos suministra este producto
+    @Required
+    private Proveedor proveedor;
 
-    // 3) Información de inventario
+    // 3) Inventario
     @Column(length = 20)
     @Required
-    private String unidadMedida;     // Ej: "Litro", "Kg", "Frasco 250 ml"
+    private String unidadMedida;
 
-    // Stock actual en bodega
     @Digits(integer = 10, fraction = 2)
     @Column(precision = 12, scale = 2)
     @Required
     private BigDecimal stockActual = BigDecimal.ZERO;
 
-    // Cantidad mínima antes de lanzar alerta
     @Digits(integer = 10, fraction = 2)
     @Column(precision = 12, scale = 2)
     @Required
@@ -89,119 +98,59 @@ public class Producto {
     @Required
     private BigDecimal precioVenta = BigDecimal.ZERO;
 
-    // Porcentaje de IVA, por ejemplo 15 = 15%
     @Digits(integer = 3, fraction = 2)
     @Column(precision = 5, scale = 2)
     private BigDecimal iva = new BigDecimal("15.00");
 
     // ===== Reglas de negocio =====
-
     @PreUpdate
     private void validarPrecios() {
-        if (precioCompra != null && precioVenta != null) {
-            if (precioVenta.compareTo(precioCompra) < 0) {
-                throw new IllegalArgumentException(
-                        "El precio de venta no puede ser menor que el precio de compra para el producto " + codigo
-                );
-            }
+        if (precioCompra != null && precioVenta != null &&
+                precioVenta.compareTo(precioCompra) < 0) {
+            throw new IllegalArgumentException(
+                    "El precio de venta no puede ser menor que el precio de compra para el producto " + codigo
+            );
         }
     }
 
     // ===== Getters y Setters =====
 
-    public String getCodigo() {
-        return codigo;
-    }
+    public String getCodigo() { return codigo; }
+    public void setCodigo(String codigo) { this.codigo = codigo; }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getTipo() { return tipo; }
+    public void setTipo(String tipo) { this.tipo = tipo; }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public String getTipo() {
-        return tipo;
-    }
+    public boolean isActivo() { return activo; }
+    public void setActivo(boolean activo) { this.activo = activo; }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
+    public Categoria getCategoria() { return categoria; }
+    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
+    public Proveedor getProveedor() { return proveedor; }
+    public void setProveedor(Proveedor proveedor) { this.proveedor = proveedor; }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+    public String getUnidadMedida() { return unidadMedida; }
+    public void setUnidadMedida(String unidadMedida) { this.unidadMedida = unidadMedida; }
 
-    public boolean isActivo() {
-        return activo;
-    }
+    public BigDecimal getStockActual() { return stockActual; }
+    public void setStockActual(BigDecimal stockActual) { this.stockActual = stockActual; }
 
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
+    public BigDecimal getStockMinimo() { return stockMinimo; }
+    public void setStockMinimo(BigDecimal stockMinimo) { this.stockMinimo = stockMinimo; }
 
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
+    public BigDecimal getPrecioCompra() { return precioCompra; }
+    public void setPrecioCompra(BigDecimal precioCompra) { this.precioCompra = precioCompra; }
 
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
-    }
+    public BigDecimal getPrecioVenta() { return precioVenta; }
+    public void setPrecioVenta(BigDecimal precioVenta) { this.precioVenta = precioVenta; }
 
-    public String getUnidadMedida() {
-        return unidadMedida;
-    }
-
-    public void setUnidadMedida(String unidadMedida) {
-        this.unidadMedida = unidadMedida;
-    }
-
-    public BigDecimal getStockActual() {
-        return stockActual;
-    }
-
-    public void setStockActual(BigDecimal stockActual) {
-        this.stockActual = stockActual;
-    }
-
-    public BigDecimal getStockMinimo() {
-        return stockMinimo;
-    }
-
-    public void setStockMinimo(BigDecimal stockMinimo) {
-        this.stockMinimo = stockMinimo;
-    }
-
-    public BigDecimal getPrecioCompra() {
-        return precioCompra;
-    }
-
-    public void setPrecioCompra(BigDecimal precioCompra) {
-        this.precioCompra = precioCompra;
-    }
-
-    public BigDecimal getPrecioVenta() {
-        return precioVenta;
-    }
-
-    public void setPrecioVenta(BigDecimal precioVenta) {
-        this.precioVenta = precioVenta;
-    }
-
-    public BigDecimal getIva() {
-        return iva;
-    }
-
-    public void setIva(BigDecimal iva) {
-        this.iva = iva;
-    }
+    public BigDecimal getIva() { return iva; }
+    public void setIva(BigDecimal iva) { this.iva = iva; }
 }
