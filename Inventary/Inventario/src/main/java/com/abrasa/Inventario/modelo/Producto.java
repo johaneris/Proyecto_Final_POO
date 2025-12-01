@@ -3,6 +3,7 @@ package com.abrasa.Inventario.modelo;
 import java.math.BigDecimal;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
+
 import org.openxava.annotations.*;
 
 /**
@@ -13,7 +14,7 @@ import org.openxava.annotations.*;
 @View(name = "Simple",
         members =
                 "DatosGenerales[" +
-                        "   codigo; nombre; tipo; activo; " +
+                        "   codigo; nombre; tipo; proveedor; activo; " +   // ? proveedor visible aquí
                         "   descripcion;" +
                         "] " +
                         "Inventario[" +
@@ -25,7 +26,7 @@ import org.openxava.annotations.*;
 )
 @Tab(name = "Productos",
         baseCondition = "activo = true",
-        properties = "codigo, nombre, tipo, unidadMedida, stockActual, stockMinimo, precioVenta"
+        properties = "codigo, nombre, tipo, proveedor.nombreComercial, unidadMedida, stockActual, stockMinimo, precioVenta"
 )
 public class Producto {
 
@@ -51,7 +52,14 @@ public class Producto {
     @Required
     private boolean activo = true;   // Para desactivar productos sin borrarlos
 
-    // 2) Información de inventario
+    // 2) Proveedor del producto
+    @ManyToOne
+    @DescriptionsList(descriptionProperties = "nombreComercial, nombreLegal")
+    @NoCreate
+    @NoModify
+    private Proveedor proveedor;     // Quién nos suministra este producto
+
+    // 3) Información de inventario
     @Column(length = 20)
     @Required
     private String unidadMedida;     // Ej: "Litro", "Kg", "Frasco 250 ml"
@@ -68,7 +76,7 @@ public class Producto {
     @Required
     private BigDecimal stockMinimo = BigDecimal.ZERO;
 
-    // 3) Precios
+    // 4) Precios
     @Money
     @Digits(integer = 10, fraction = 2)
     @Column(precision = 12, scale = 2)
@@ -85,8 +93,6 @@ public class Producto {
     @Digits(integer = 3, fraction = 2)
     @Column(precision = 5, scale = 2)
     private BigDecimal iva = new BigDecimal("15.00");
-
-
 
     // ===== Reglas de negocio =====
 
@@ -141,6 +147,14 @@ public class Producto {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
     public String getUnidadMedida() {
