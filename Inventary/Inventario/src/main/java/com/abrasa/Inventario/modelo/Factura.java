@@ -140,7 +140,7 @@ public class Factura {
 
     // ==== VALIDACIONES / CÁLCULO ANTES DE GRABAR ====
 
-    @PrePersist
+
     @PreUpdate
     private void validarYRecalcular() {
 
