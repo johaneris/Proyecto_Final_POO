@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.abrasa</groupId>
+    <artifactId>Inventario</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <openxava.version>7.0</openxava.version>
+        <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+        <!-- Las aplicaciones OpenXava funcionan bien con Java 1.8, 11 y 17 -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <!-- OpenXava -->
+        <dependency>
+            <groupId>org.openxava</groupId>
+            <artifactId>openxava</artifactId>
+            <version>${openxava.version}</version>
+        </dependency>
+
+        <!-- PostgreSQL -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.5.1</version>
+        </dependency>
+
+        <!-- Lombok (solo en tiempo de compilación) -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.42</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Otros drivers de BD (ejemplos, comentados) -->
+
+        <!--
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.29</version>
+        </dependency>
+        -->
+
+        <!--
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <version>21.5.0.0</version>
+        </dependency>
+        -->
+
+        <!--
+        <dependency>
+            <groupId>net.sf.jt400</groupId>
+            <artifactId>jt400</artifactId>
+            <version>11.0</version>
+        </dependency>
+        -->
+
+        <!--
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>10.2.1.jre8</version>
+        </dependency>
+        -->
+
+        <!--
+        <dependency>
+            <groupId>com.ibm.informix</groupId>
+            <artifactId>jdbc</artifactId>
+            <version>4.50.8</version>
+        </dependency>
+        -->
+
+        <!--
+        <dependency>
+            <groupId>com.ibm.db2</groupId>
+            <artifactId>jcc</artifactId>
+            <version>11.5.7.0</version>
+        </dependency>
+        -->
+
+        <!--
+        <dependency>
+            <groupId>org.firebirdsql.jdbc</groupId>
+            <artifactId>jaybird</artifactId>
+            <version>4.0.6.java8</version>
+        </dependency>
+        -->
+
+    </dependencies>
+
+    <build>
+        <!-- Debe coincidir con el nombre que pasas a AppServer.run("Inventario") -->
+        <finalName>Inventario</finalName>
+
+        <plugins>
+            <!-- Desempaquetar los DTD de OpenXava -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.openxava</groupId>
+                                    <artifactId>openxava</artifactId>
+                                    <version>${openxava.version}</version>
+                                    <outputDirectory>src/main/resources</outputDirectory>
+                                    <includes>xava/dtds/*</includes>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Generar el WAR de la aplicación OpenXava -->
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <packagingExcludes>
+                        WEB-INF/lib/ecj-3*.jar,
+                        WEB-INF/lib/fontbox-*.jar,
+                        WEB-INF/lib/htmlunit-*.jar,
+                        WEB-INF/lib/httpclient-*.jar,
+                        WEB-INF/lib/httpcore-*.jar,
+                        WEB-INF/lib/httpmime-*.jar,
+                        WEB-INF/lib/jetty-*.jar,
+                        WEB-INF/lib/junit-*.jar,
+                        WEB-INF/lib/neko-htmlunit-*.jar,
+                        WEB-INF/lib/pdfbox-*.jar,
+                        WEB-INF/lib/serializer-*.jar,
+                        WEB-INF/lib/tomcat-*.jar,
+                        WEB-INF/lib/websocket-*.jar,
+                        WEB-INF/lib/xalan-*.jar,
+                        WEB-INF/lib/xercesImpl-*.jar,
+                        WEB-INF/lib/xml-apis-*.jar
+                    </packagingExcludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

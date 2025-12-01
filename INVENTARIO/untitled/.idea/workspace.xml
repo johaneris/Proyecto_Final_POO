@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e85658cf-b191-4fa0-950f-4ce17b3e9586" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/java/com/abrasa/Inventario/modelo/TuPrimeraEntidad.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/java/com/abrasa/Inventario/run/.algo" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/java/com/abrasa/Inventario/run/Inventario.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/META-INF/persistence.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/i18n/Inventario-labels_es.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/i18n/Inventario-messages_es.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/naviox-users.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/naviox.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/aplicacion.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/controladores.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/annotation-type-default.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/aplicacion.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/application.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/controladores.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/controllers.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/conversores.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/converters.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/default-size.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/editores.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/editors.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/longitud-defecto.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/stereotype-type-default.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/tabs-default-values.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/tipo-anotacion-defecto.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/tipo-estereotipo-defecto.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/validadores.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/validators.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/resources/xava/dtds/valores-defecto-tabs.dtd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/webapp/META-INF/context.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/main/webapp/xava/style/custom.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Inventary/Inventario/src/test/resources/xava-junit.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "johaneris"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/johaneris/Proyecto_Final_POO.git",
+    "accountId": "dffcd2d5-6595-4742-946b-d3b0490a96a0"
+  }
+}]]></component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="$PROJECT_DIR$/../../../../../../../laragon/bin/php/php-8.1.10-Win32-vs16-x64/php.exe" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="36EGHzwiU5v1ifJGXn1nhyBb0BY" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Inventario.executor": "Run",
+    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "Maven.untitled [package].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "johaneris",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Inventario" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.abrasa.untitled.run.Inventario" />
+      <module name="Inventario" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.abrasa.untitled.run.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Inventario" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Inventario" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="Inventario" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Python.FlaskServer">
+      <module name="Inventario" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="Inventario" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Inventario" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.23892.409" />
+        <option value="bundled-js-predefined-d6986cc7102b-e03c56caf84a-JavaScript-IU-252.23892.409" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e85658cf-b191-4fa0-950f-4ce17b3e9586" name="Changes" comment="" />
+      <created>1764564235421</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1764564235421</updated>
+      <workItem from="1764564237461" duration="2058000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
