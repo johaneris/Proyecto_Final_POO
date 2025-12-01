@@ -33,34 +33,35 @@ public class Producto {
     @Column(length = 15)
     @Required
     @LabelFormat(LabelFormatType.SMALL)
-    private String codigo;
+    private String codigo;           // Ej: "HERB-001", "FERT-15KG"
 
     @Column(length = 80)
     @Required
-    private String nombre;
+    private String nombre;           // Ej: "Glifosato 480 SL", "Urea 46%"
 
     @Column(length = 30)
     @Required
-    private String tipo;
+    private String tipo;             // Ej: "Agroquímico", "Fertilizante", "Veterinario"
 
     @Column(length = 200)
     @Stereotype("MEMO")
-    private String descripcion;
+    private String descripcion;      // Detalle del producto, dosis, observaciones, etc.
 
     @Required
-    private boolean activo = true;
+    private boolean activo = true;   // Para desactivar productos sin borrarlos
 
 
     // 2) Información de inventario
     @Column(length = 20)
     @Required
-    private String unidadMedida;
+    private String unidadMedida;     // Ej: "Litro", "Kg", "Frasco 250 ml"
 
 
     @Digits(integer = 10, fraction = 2)
     @Column(precision = 12, scale = 2)
     @Required
-    private BigDecimal stockMinimo = BigDecimal.ZERO;
+    private BigDecimal stockMinimo = BigDecimal.ZERO; // Cantidad mínima antes de lanzar alerta
+
 
     // 3) Precios
     @Money
@@ -81,8 +82,7 @@ public class Producto {
     private BigDecimal iva = new BigDecimal("15.00");
 
 
-    // 4) Regla de negocio: validar que el precio de venta no sea menor al de compra
-    @PrePersist
+
     @PreUpdate
     private void validarPrecios() {
         if (precioCompra != null && precioVenta != null) {
