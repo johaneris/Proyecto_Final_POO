@@ -27,6 +27,7 @@
         <class>com.abrasa.Inventario.modelo.Factura</class>
         <class>com.abrasa.Inventario.modelo.DetalleFactura</class>
         <class>com.abrasa.Inventario.modelo.Cliente</class>
+        <class>com.abrasa.Inventario.modelo.Proveedor</class>
 
 
         <properties>
