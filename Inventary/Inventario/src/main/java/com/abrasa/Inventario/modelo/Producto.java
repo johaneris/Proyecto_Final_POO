@@ -1,0 +1,180 @@
+package com.abrasa.Inventario.modelo;
+
+import java.math.BigDecimal;
+import javax.persistence.*;
+import javax.validation.constraints.Digits;
+
+import org.openxava.annotations.*;
+
+// Entidad JPA + OpenXava: representará una tabla PRODUCTO en PostgreSQL
+@Entity
+@Table(name = "producto")
+@View(name = "Simple",
+        members =
+                "DatosGenerales[" +
+                        "   codigo; nombre; tipo; activo; " +
+                        "   descripcion;" +
+                        "] " +
+                        "Inventario[" +
+                        "   unidadMedida; stockMinimo; " +
+                        "] " +
+                        "Precios[" +
+                        "   precioCompra; precioVenta; iva;" +
+                        "]"
+)
+@Tab(name = "Productos",
+        baseCondition = "activo = true",
+        properties = "codigo, nombre, tipo, unidadMedida, precioVenta, stockMinimo"
+)
+public class Producto {
+
+    // 1) Identificación
+    @Id
+    @Column(length = 15)
+    @Required
+    @LabelFormat(LabelFormatType.SMALL)
+    private String codigo;
+
+    @Column(length = 80)
+    @Required
+    private String nombre;
+
+    @Column(length = 30)
+    @Required
+    private String tipo;
+
+    @Column(length = 200)
+    @Stereotype("MEMO")
+    private String descripcion;
+
+    @Required
+    private boolean activo = true;
+
+
+    // 2) Información de inventario
+    @Column(length = 20)
+    @Required
+    private String unidadMedida;
+
+
+    @Digits(integer = 10, fraction = 2)
+    @Column(precision = 12, scale = 2)
+    @Required
+    private BigDecimal stockMinimo = BigDecimal.ZERO;
+
+    // 3) Precios
+    @Money
+    @Digits(integer = 10, fraction = 2)
+    @Column(precision = 12, scale = 2)
+    @Required
+    private BigDecimal precioCompra = BigDecimal.ZERO;
+
+    @Money
+    @Digits(integer = 10, fraction = 2)
+    @Column(precision = 12, scale = 2)
+    @Required
+    private BigDecimal precioVenta = BigDecimal.ZERO;
+
+    // Porcentaje de IVA, por ejemplo 15 = 15%
+    @Digits(integer = 3, fraction = 2)
+    @Column(precision = 5, scale = 2)
+    private BigDecimal iva = new BigDecimal("15.00");
+
+
+    // 4) Regla de negocio: validar que el precio de venta no sea menor al de compra
+    @PrePersist
+    @PreUpdate
+    private void validarPrecios() {
+        if (precioCompra != null && precioVenta != null) {
+            // precioVenta >= precioCompra
+            if (precioVenta.compareTo(precioCompra) < 0) {
+                throw new IllegalArgumentException(
+                        "El precio de venta no puede ser menor que el precio de compra para el producto " + codigo
+                );
+            }
+        }
+    }
+
+
+    // ===== Getters y Setters =====
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    public String getUnidadMedida() {
+        return unidadMedida;
+    }
+
+    public void setUnidadMedida(String unidadMedida) {
+        this.unidadMedida = unidadMedida;
+    }
+
+    public BigDecimal getStockMinimo() {
+        return stockMinimo;
+    }
+
+    public void setStockMinimo(BigDecimal stockMinimo) {
+        this.stockMinimo = stockMinimo;
+    }
+
+    public BigDecimal getPrecioCompra() {
+        return precioCompra;
+    }
+
+    public void setPrecioCompra(BigDecimal precioCompra) {
+        this.precioCompra = precioCompra;
+    }
+
+    public BigDecimal getPrecioVenta() {
+        return precioVenta;
+    }
+
+    public void setPrecioVenta(BigDecimal precioVenta) {
+        this.precioVenta = precioVenta;
+    }
+
+    public BigDecimal getIva() {
+        return iva;
+    }
+
+    public void setIva(BigDecimal iva) {
+        this.iva = iva;
+    }
+}
