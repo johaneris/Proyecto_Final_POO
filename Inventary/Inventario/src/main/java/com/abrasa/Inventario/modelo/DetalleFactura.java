@@ -54,7 +54,7 @@ public class DetalleFactura {
     private BigDecimal importe = BigDecimal.ZERO;
 
     // Reglas de negocio de la línea
-    @PrePersist
+
     @PreUpdate
     private void recalcularImporteYLógica() {
 

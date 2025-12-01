@@ -82,8 +82,7 @@ public class Producto {
     private BigDecimal iva = new BigDecimal("15.00");
 
 
-    // 4) Regla de negocio: validar que el precio de venta no sea menor al de compra
-    @PrePersist
+
     @PreUpdate
     private void validarPrecios() {
         if (precioCompra != null && precioVenta != null) {
