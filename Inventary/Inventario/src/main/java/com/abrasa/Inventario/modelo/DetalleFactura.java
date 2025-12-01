@@ -28,7 +28,7 @@ public class DetalleFactura {
 
     // Producto vendido
     @ManyToOne(optional = false)
-    @ReferenceView("Simple")        // usa la vista Simple de Producto
+    @ReferenceView("Simple")
     @Required
     private Producto producto;
 
@@ -54,7 +54,7 @@ public class DetalleFactura {
     private BigDecimal importe = BigDecimal.ZERO;
 
     // Reglas de negocio de la línea
-
+    @PrePersist
     @PreUpdate
     private void recalcularImporteYLógica() {
 
@@ -65,7 +65,6 @@ public class DetalleFactura {
             throw new IllegalArgumentException("El precio unitario debe ser mayor que cero");
         }
 
-        // No vender por debajo del precio de compra
         if (producto != null && producto.getPrecioCompra() != null &&
                 precioUnitario.compareTo(producto.getPrecioCompra()) < 0) {
             throw new IllegalArgumentException(
@@ -73,7 +72,6 @@ public class DetalleFactura {
                             " por debajo del precio de compra");
         }
 
-        // Importe = cantidad * precioUnitario
         this.importe = cantidad.multiply(precioUnitario)
                 .setScale(2, BigDecimal.ROUND_HALF_UP);
     }
