@@ -47,17 +47,17 @@ public class Factura {
     @Required
     private LocalDate fecha = LocalDate.now();
 
-    // AHORA: referencia a Cliente (en lugar de String)
+    // Cliente
     @ManyToOne(optional = false)
-    @ReferenceView("Simple")           // utiliza la vista Simple de Cliente
+    @ReferenceView("Simple")
     @Required
     private Cliente cliente;
 
     // Contado / Crédito
     @Required
-    @Stereotype("ENUMERATION")        // se mostrará como combo en la UI
+    @Stereotype("ENUMERATION")   // "CONTADO" o "CREDITO"
     @Column(length = 10)
-    private String tipoVenta;         // "CONTADO" o "CREDITO"
+    private String tipoVenta;
 
     @Required
     private boolean pagada = false;
@@ -95,12 +95,10 @@ public class Factura {
     // ================= LÓGICA DE NEGOCIO =================
 
     public boolean esVentaACredito() {
-        return "CREDITO".equalsIgnoreCase(tipoVenta);
+        String tv = (tipoVenta == null) ? "" : tipoVenta;
+        return "CREDITO".equalsIgnoreCase(tv);
     }
 
-    /**
-     * Añade una línea desde código (útil para acciones futuras).
-     */
     public void agregarLinea(Producto producto,
                              BigDecimal cantidad,
                              BigDecimal precioUnitario) {
@@ -115,67 +113,72 @@ public class Factura {
 
     /**
      * Recalcula subtotal, IVA y total en base a las líneas.
+     * Todo null se trata como 0 para evitar errores.
      */
     public void recalcularTotales() {
         BigDecimal nuevoSubtotal = BigDecimal.ZERO;
 
         if (detalles != null) {
             for (DetalleFactura d : detalles) {
-                if (d.getImporte() != null) {
-                    nuevoSubtotal = nuevoSubtotal.add(d.getImporte());
+                BigDecimal imp = d.getImporte();
+                if (imp != null) {
+                    nuevoSubtotal = nuevoSubtotal.add(imp);
                 }
             }
         }
 
         this.subtotal = nuevoSubtotal.setScale(2, BigDecimal.ROUND_HALF_UP);
 
-        BigDecimal porcentaje = porcentajeIva == null
-                ? BigDecimal.ZERO
-                : porcentajeIva.divide(new BigDecimal("100"), 4, BigDecimal.ROUND_HALF_UP);
+        BigDecimal porcentaje =
+                (porcentajeIva == null)
+                        ? BigDecimal.ZERO
+                        : porcentajeIva.divide(new BigDecimal("100"), 4, BigDecimal.ROUND_HALF_UP);
 
         this.iva = subtotal.multiply(porcentaje).setScale(2, BigDecimal.ROUND_HALF_UP);
         this.total = subtotal.add(iva).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 
-    /**
-     * Validaciones y recálculo antes de grabar/actualizar.
-     */
+    // ==== VALIDACIONES / CÁLCULO ANTES DE GRABAR ====
 
+    @PrePersist
     @PreUpdate
     private void validarYRecalcular() {
 
-        // Debe tener al menos una línea
         if (detalles == null || detalles.isEmpty()) {
             throw new IllegalArgumentException("La factura debe tener al menos un producto");
         }
 
-        // Cliente obligatorio siempre
         if (cliente == null) {
             throw new IllegalArgumentException("Debe seleccionar un cliente para la factura");
         }
 
-        // Recalcular totales
+        // Aseguramos que porcentajeIva nunca sea null
+        if (porcentajeIva == null) {
+            porcentajeIva = BigDecimal.ZERO;
+        }
+
         recalcularTotales();
 
-        if (total.compareTo(BigDecimal.ZERO) <= 0) {
+        if (total == null || total.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("El total de la factura debe ser mayor que cero");
         }
 
         // Reglas de crédito
         if (esVentaACredito()) {
 
-            // El cliente debe tener crédito habilitado
             if (!cliente.isPermiteCredito()) {
                 throw new IllegalArgumentException(
                         "El cliente " + cliente.getNombre() +
                                 " no tiene crédito habilitado");
             }
 
-            BigDecimal limite = cliente.getLimiteCredito() == null
-                    ? BigDecimal.ZERO : cliente.getLimiteCredito();
+            BigDecimal limite = (cliente.getLimiteCredito() == null)
+                    ? BigDecimal.ZERO
+                    : cliente.getLimiteCredito();
 
-            BigDecimal saldoActual = cliente.getSaldoPendiente() == null
-                    ? BigDecimal.ZERO : cliente.getSaldoPendiente();
+            BigDecimal saldoActual = (cliente.getSaldoPendiente() == null)
+                    ? BigDecimal.ZERO
+                    : cliente.getSaldoPendiente();
 
             BigDecimal nuevoSaldo = saldoActual.add(total);
 
@@ -187,31 +190,25 @@ public class Factura {
         }
     }
 
-    /**
-     * Después de grabar/actualizar, actualizar saldo del cliente si la venta es a crédito
-     * y la factura queda pendiente (no pagada).
-     */
+    // ==== ACTUALIZAR SALDO DEL CLIENTE AL FACTURAR ====
+
     @PostPersist
     @PostUpdate
     private void actualizarSaldoCliente() {
         if (!esVentaACredito()) return;
         if (pagada) return;
-
-        // Si el total aún no está calculado, no hacemos nada
         if (total == null) return;
 
-        BigDecimal saldoActual = cliente.getSaldoPendiente() == null
+        BigDecimal saldoActual = (cliente.getSaldoPendiente() == null)
                 ? BigDecimal.ZERO
                 : cliente.getSaldoPendiente();
 
-        BigDecimal totalFactura = total == null
-                ? BigDecimal.ZERO
-                : total;
-
         cliente.setSaldoPendiente(
-                saldoActual.add(totalFactura).setScale(2, BigDecimal.ROUND_HALF_UP)
+                saldoActual.add(total).setScale(2, BigDecimal.ROUND_HALF_UP)
         );
     }
+
+    // ==== REGISTRAR PAGO DESDE LÓGICA DE NEGOCIO ====
 
     public void registrarPago() throws PagoFacturaException {
 
@@ -223,16 +220,20 @@ public class Factura {
             throw new PagoFacturaException("pago_solo_facturas_credito");
         }
 
-        if (isPagada()) {
+        if (pagada) {
             throw new PagoFacturaException("factura_ya_pagada");
         }
 
+        if (total == null || total.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new PagoFacturaException("total_factura_debe_ser_mayor_cero");
+        }
+
         try {
-            BigDecimal saldoActual = cliente.getSaldoPendiente() == null
+            BigDecimal saldoActual = (cliente.getSaldoPendiente() == null)
                     ? BigDecimal.ZERO
                     : cliente.getSaldoPendiente();
 
-            BigDecimal nuevoSaldo = saldoActual.subtract(getTotal());
+            BigDecimal nuevoSaldo = saldoActual.subtract(total);
             if (nuevoSaldo.compareTo(BigDecimal.ZERO) < 0) {
                 nuevoSaldo = BigDecimal.ZERO;
             }
@@ -241,18 +242,14 @@ public class Factura {
                     nuevoSaldo.setScale(2, BigDecimal.ROUND_HALF_UP)
             );
 
-            setPagada(true); // marcamos la factura como pagada
+            this.pagada = true;
         }
         catch (Exception ex) {
-            // Cualquier problema inesperado
             throw new org.openxava.util.SystemException(
                     "imposible_registrar_pago_factura", ex);
         }
     }
 
-    /**
-     * Grabar desde código si en algún momento lo necesitas.
-     */
     public void guardar() {
         XPersistence.getManager().persist(this);
     }
