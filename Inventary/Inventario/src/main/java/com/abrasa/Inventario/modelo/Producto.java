@@ -3,10 +3,11 @@ package com.abrasa.Inventario.modelo;
 import java.math.BigDecimal;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
-
 import org.openxava.annotations.*;
 
-// Entidad JPA + OpenXava: representará una tabla PRODUCTO en PostgreSQL
+/**
+ * Entidad JPA + OpenXava que representa un producto del inventario.
+ */
 @Entity
 @Table(name = "producto")
 @View(name = "Simple",
@@ -16,7 +17,7 @@ import org.openxava.annotations.*;
                         "   descripcion;" +
                         "] " +
                         "Inventario[" +
-                        "   unidadMedida; stockMinimo; " +
+                        "   unidadMedida; stockActual; stockMinimo; " +
                         "] " +
                         "Precios[" +
                         "   precioCompra; precioVenta; iva;" +
@@ -24,7 +25,7 @@ import org.openxava.annotations.*;
 )
 @Tab(name = "Productos",
         baseCondition = "activo = true",
-        properties = "codigo, nombre, tipo, unidadMedida, precioVenta, stockMinimo"
+        properties = "codigo, nombre, tipo, unidadMedida, stockActual, stockMinimo, precioVenta"
 )
 public class Producto {
 
@@ -50,18 +51,22 @@ public class Producto {
     @Required
     private boolean activo = true;   // Para desactivar productos sin borrarlos
 
-
     // 2) Información de inventario
     @Column(length = 20)
     @Required
     private String unidadMedida;     // Ej: "Litro", "Kg", "Frasco 250 ml"
 
-
+    // Stock actual en bodega
     @Digits(integer = 10, fraction = 2)
     @Column(precision = 12, scale = 2)
     @Required
-    private BigDecimal stockMinimo = BigDecimal.ZERO; // Cantidad mínima antes de lanzar alerta
+    private BigDecimal stockActual = BigDecimal.ZERO;
 
+    // Cantidad mínima antes de lanzar alerta
+    @Digits(integer = 10, fraction = 2)
+    @Column(precision = 12, scale = 2)
+    @Required
+    private BigDecimal stockMinimo = BigDecimal.ZERO;
 
     // 3) Precios
     @Money
@@ -83,10 +88,11 @@ public class Producto {
 
 
 
+    // ===== Reglas de negocio =====
+
     @PreUpdate
     private void validarPrecios() {
         if (precioCompra != null && precioVenta != null) {
-            // precioVenta >= precioCompra
             if (precioVenta.compareTo(precioCompra) < 0) {
                 throw new IllegalArgumentException(
                         "El precio de venta no puede ser menor que el precio de compra para el producto " + codigo
@@ -94,7 +100,6 @@ public class Producto {
             }
         }
     }
-
 
     // ===== Getters y Setters =====
 
@@ -144,6 +149,14 @@ public class Producto {
 
     public void setUnidadMedida(String unidadMedida) {
         this.unidadMedida = unidadMedida;
+    }
+
+    public BigDecimal getStockActual() {
+        return stockActual;
+    }
+
+    public void setStockActual(BigDecimal stockActual) {
+        this.stockActual = stockActual;
     }
 
     public BigDecimal getStockMinimo() {
