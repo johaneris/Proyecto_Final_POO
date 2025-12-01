@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.openxava.annotations.*;
 
 /**
@@ -11,6 +13,8 @@ import org.openxava.annotations.*;
  */
 @Entity
 @Table(name = "producto")
+@Getter
+@Setter
 @View(name = "Simple",
         members =
                 "DatosGenerales[" +
@@ -113,44 +117,5 @@ public class Producto {
         }
     }
 
-    // ===== Getters y Setters =====
 
-    public String getCodigo() { return codigo; }
-    public void setCodigo(String codigo) { this.codigo = codigo; }
-
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
-
-    public String getTipo() { return tipo; }
-    public void setTipo(String tipo) { this.tipo = tipo; }
-
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
-
-    public boolean isActivo() { return activo; }
-    public void setActivo(boolean activo) { this.activo = activo; }
-
-    public Categoria getCategoria() { return categoria; }
-    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
-
-    public Proveedor getProveedor() { return proveedor; }
-    public void setProveedor(Proveedor proveedor) { this.proveedor = proveedor; }
-
-    public String getUnidadMedida() { return unidadMedida; }
-    public void setUnidadMedida(String unidadMedida) { this.unidadMedida = unidadMedida; }
-
-    public BigDecimal getStockActual() { return stockActual; }
-    public void setStockActual(BigDecimal stockActual) { this.stockActual = stockActual; }
-
-    public BigDecimal getStockMinimo() { return stockMinimo; }
-    public void setStockMinimo(BigDecimal stockMinimo) { this.stockMinimo = stockMinimo; }
-
-    public BigDecimal getPrecioCompra() { return precioCompra; }
-    public void setPrecioCompra(BigDecimal precioCompra) { this.precioCompra = precioCompra; }
-
-    public BigDecimal getPrecioVenta() { return precioVenta; }
-    public void setPrecioVenta(BigDecimal precioVenta) { this.precioVenta = precioVenta; }
-
-    public BigDecimal getIva() { return iva; }
-    public void setIva(BigDecimal iva) { this.iva = iva; }
 }
