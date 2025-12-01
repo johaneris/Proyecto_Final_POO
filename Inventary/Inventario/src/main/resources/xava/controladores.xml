@@ -20,5 +20,16 @@
                 clase="acciones.CrearProfesor"/>        
     </controlador>
     -->
+
+    <controlador nombre="Factura">
+        <!-- Hereda las acciones típicas (Nuevo, Grabar, Borrar, etc.) -->
+        <hereda-de controlador="Typical"/>
+
+        <!-- Acción personalizada para registrar el pago -->
+        <accion nombre="registrarPago"
+                modo="detail"
+                etiqueta="REGISTRAR PAGO"
+                clase="com.abrasa.Inventario.acciones.RegistrarPagoFacturaAction"/>
+    </controlador>
     
 </controladores>

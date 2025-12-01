@@ -195,14 +195,59 @@ public class Factura {
     @PostUpdate
     private void actualizarSaldoCliente() {
         if (!esVentaACredito()) return;
-        if (pagada) return; // si está pagada, no deja deuda
+        if (pagada) return;
+
+        // Si el total aún no está calculado, no hacemos nada
+        if (total == null) return;
 
         BigDecimal saldoActual = cliente.getSaldoPendiente() == null
-                ? BigDecimal.ZERO : cliente.getSaldoPendiente();
+                ? BigDecimal.ZERO
+                : cliente.getSaldoPendiente();
+
+        BigDecimal totalFactura = total == null
+                ? BigDecimal.ZERO
+                : total;
 
         cliente.setSaldoPendiente(
-                saldoActual.add(total).setScale(2, BigDecimal.ROUND_HALF_UP)
+                saldoActual.add(totalFactura).setScale(2, BigDecimal.ROUND_HALF_UP)
         );
+    }
+
+    public void registrarPago() throws PagoFacturaException {
+
+        if (cliente == null) {
+            throw new PagoFacturaException("factura_sin_cliente");
+        }
+
+        if (!esVentaACredito()) {
+            throw new PagoFacturaException("pago_solo_facturas_credito");
+        }
+
+        if (isPagada()) {
+            throw new PagoFacturaException("factura_ya_pagada");
+        }
+
+        try {
+            BigDecimal saldoActual = cliente.getSaldoPendiente() == null
+                    ? BigDecimal.ZERO
+                    : cliente.getSaldoPendiente();
+
+            BigDecimal nuevoSaldo = saldoActual.subtract(getTotal());
+            if (nuevoSaldo.compareTo(BigDecimal.ZERO) < 0) {
+                nuevoSaldo = BigDecimal.ZERO;
+            }
+
+            cliente.setSaldoPendiente(
+                    nuevoSaldo.setScale(2, BigDecimal.ROUND_HALF_UP)
+            );
+
+            setPagada(true); // marcamos la factura como pagada
+        }
+        catch (Exception ex) {
+            // Cualquier problema inesperado
+            throw new org.openxava.util.SystemException(
+                    "imposible_registrar_pago_factura", ex);
+        }
     }
 
     /**
