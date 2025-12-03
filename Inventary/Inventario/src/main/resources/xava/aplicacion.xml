@@ -6,10 +6,12 @@
 
     <modulo nombre="Producto">
         <modelo nombre="Producto"/>
-        <!-- Acciones estándar -->
-
-        <!-- Tu controlador con el botón del reporte -->
         <controlador nombre="Producto"/>
+    </modulo>
+
+    <modulo nombre="Movimiento">
+        <modelo nombre="Movimiento"/>
+        <controlador nombre="Movimiento"/>
     </modulo>
 
 </aplicacion>
