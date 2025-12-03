@@ -76,7 +76,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Calibri" size="27" isBold="true"/>
                 </textElement>
-                <text><![CDATA[Inventario ABRASA – Ficha de Producto
+                <text><![CDATA[Inventario ABRASA – Ficha
 ]]></text>
             </staticText>
 

@@ -7,7 +7,7 @@
     <modulo nombre="Producto">
         <modelo nombre="Producto"/>
         <!-- Acciones estándar -->
-        <controlador nombre="Typical"/>
+
         <!-- Tu controlador con el botón del reporte -->
         <controlador nombre="Producto"/>
     </modulo>
