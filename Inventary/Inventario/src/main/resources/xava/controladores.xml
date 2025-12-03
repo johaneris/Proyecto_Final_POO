@@ -12,4 +12,12 @@
                 clase="com.abrasa.Inventario.acciones.PrintReporteProductoAction"/>
     </controlador>
 
+    <controlador nombre="Movimiento">
+        <hereda-de controlador="Typical"/>
+        <accion nombre="imprimirHistorialMovimientos"
+                icono="printer"
+                modo ="list"
+                clase="com.abrasa.Inventario.acciones.PrintHistorialMovimientosAction"/>
+    </controlador>
+
 </controladores>
