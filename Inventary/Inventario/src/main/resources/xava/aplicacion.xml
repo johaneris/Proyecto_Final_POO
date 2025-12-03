@@ -2,28 +2,14 @@
 
 <!DOCTYPE aplicacion SYSTEM "dtds/aplicacion.dtd">
 
-<aplicacion nombre="Inventario"> 
-	
-	<!--
-	Un mï¿½dulo por defecto se asume para cada
-	controlador en <modulo-defecto/> 
-	-->
-	<modulo-defecto>		  
-		<controlador nombre="Typical"/>
-	</modulo-defecto>
+<aplicacion nombre="Inventario">
 
-    <modulo nombre="Factura">
-        <modelo nombre="Factura"/>
-        <controlador nombre="Factura"/>
+    <modulo nombre="Producto">
+        <modelo nombre="Producto"/>
+        <!-- Acciones estándar -->
+
+        <!-- Tu controlador con el botón del reporte -->
+        <controlador nombre="Producto"/>
     </modulo>
-	
-	<!--
-	Podemos definir mï¿½dulos adicionales, por ejemplo: 	
-	<modulo nombre="ProfesorSoloLectura">
-		<modelo nombre="Profesor"/>
-		<controlador nombre="Print"/>
-	</modulo>		
-	-->	  
-		
-</aplicacion>
 
+</aplicacion>

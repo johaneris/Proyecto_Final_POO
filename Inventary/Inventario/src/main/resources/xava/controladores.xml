@@ -1,35 +1,15 @@
-<?xml version = "1.0" encoding = "ISO-8859-1"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!DOCTYPE controladores SYSTEM "dtds/controladores.dtd">
 
 <controladores>
-    
-    <!-- Variable de entorno: 
-    <var-entorno nombre="Inventario_ANYO_DEFECTO" valor="2015"/>
-    -->
-    
-    <!-- Objeto de sesi�n:
-    <Objeto nombre="Inventario_anyoActivo" clase="java.lang.Integer" valor="2015" 
-            ambito="global"/>
-    -->
-    
-    <!-- Controlador:
-    <controlador nombre="Profesor">
-        <hereda-de controlador="Typical"/>
-        <accion nombre="new" icono="library-plus" atajo-de-teclado="Control N" 
-                clase="acciones.CrearProfesor"/>        
-    </controlador>
-    -->
 
-    <controlador nombre="Factura">
-        <!-- Hereda las acciones típicas (Nuevo, Grabar, Borrar, etc.) -->
+    <controlador nombre="Producto">
         <hereda-de controlador="Typical"/>
-
-        <!-- Acción personalizada para registrar el pago -->
-        <accion nombre="registrarPago"
-                modo="detail"
-                etiqueta="REGISTRAR PAGO"
-                clase="com.abrasa.Inventario.acciones.RegistrarPagoFacturaAction"/>
+        <accion nombre="imprimirReporteProductos"
+                icono="printer"
+                modo ="list"
+                clase="com.abrasa.Inventario.acciones.PrintReporteProductoAction"/>
     </controlador>
-    
+
 </controladores>
